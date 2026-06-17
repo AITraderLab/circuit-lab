@@ -1,11 +1,27 @@
-﻿# Computer/Electronic Training Deck
+﻿# Circuit Lab — Electronics Fundamentals
 
-An interactive, browser-based set of educational games covering the foundational
-electronics curriculum behind the Advanced Computer & Electronic Field.
+An interactive, gamified web app for learning the fundamentals of electronics. Built for anyone curious about how circuits work — no background required.
 
-Built for electronic learners. This game is meant for learning and entertainment purposes only. Covers publicly
-documented fundamentals only.
+**Live site:** https://aitraderlab.github.io/circuit-lab/
 
-## Run ##
+## What's inside
 
-Open index.html in any modern browser. That's it.
+Six learning modules:
+- **Ohm's Law** — solve for voltage, current, or resistance
+- **Resistor Color Code** — read the bands, call the value
+- **Schematic Symbols** — identify components from their symbols
+- **Number Systems** — convert between binary, decimal, and hexadecimal
+- **Logic Gates** — predict gate outputs from inputs
+- **Mixed Review** — AC, signals, components, and more
+
+Two challenge activities:
+- **Lightning Round** — a 60-second timed sprint
+- **Daily Drill** — five questions a day to build a streak
+
+## Gamification
+
+XP and leveling, combo multipliers, 16 unlockable achievements, per-module mastery tracking, sound effects, and progress that saves between visits.
+
+## Tech
+
+A single self-contained `index.html` — no build step, no dependencies. Hosted free on GitHub Pages.
