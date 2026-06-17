@@ -3,146 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AECF Training Deck — Electronics Fundamentals</title>
+<title>Circuit Lab — Electronics Fundamentals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --abyss:#0a1014;
-    --hull:#101b22;
-    --steel:#16242e;
-    --panel:#1b2c37;
-    --rule:#2a4150;
-    --scope:#54e08a;
-    --scope-dim:#2f7a4f;
-    --amber:#ffb454;
-    --signal:#ff6b5e;
-    --haze:#8aa3b3;
-    --chalk:#e8eef2;
-    --glow:0 0 14px rgba(84,224,138,.45);
+    --abyss:#0a1014; --hull:#101b22; --steel:#16242e; --panel:#1b2c37; --rule:#2a4150;
+    --scope:#54e08a; --scope-dim:#2f7a4f; --amber:#ffb454; --violet:#a78bfa;
+    --signal:#ff6b5e; --haze:#8aa3b3; --chalk:#e8eef2; --glow:0 0 14px rgba(84,224,138,.45);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
     background:
       radial-gradient(1200px 600px at 70% -10%, rgba(84,224,138,.06), transparent 60%),
-      radial-gradient(900px 500px at 10% 110%, rgba(255,180,84,.05), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(167,139,250,.05), transparent 60%),
       var(--abyss);
-    color:var(--chalk);
-    font-family:"IBM Plex Sans",system-ui,sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    padding:18px;
+    color:var(--chalk); font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.5;
+    -webkit-font-smoothing:antialiased; padding:18px;
   }
-  .wrap{max-width:920px;margin:0 auto}
+  .wrap{max-width:940px;margin:0 auto}
+  .console{border:1px solid var(--rule);border-radius:14px;background:linear-gradient(180deg,var(--hull),var(--abyss));overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5)}
 
-  /* ---- console header ---- */
-  .console{
-    border:1px solid var(--rule);
-    border-radius:14px;
-    background:linear-gradient(180deg,var(--hull),var(--abyss));
-    overflow:hidden;
-    box-shadow:0 24px 60px rgba(0,0,0,.5);
-  }
-  .topbar{
-    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-    padding:14px 18px;
-    background:linear-gradient(180deg,var(--steel),var(--hull));
-    border-bottom:1px solid var(--rule);
-  }
-  .crest{
-    width:42px;height:42px;border-radius:8px;flex:none;
-    background:radial-gradient(circle at 50% 35%, var(--scope), var(--scope-dim) 70%, #0b1a12);
-    display:grid;place-items:center;
-    box-shadow:var(--glow);
-  }
-  .crest svg{width:26px;height:26px}
-  .title-block{flex:1;min-width:180px}
-  .eyebrow{
-    font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--scope);
-  }
-  h1{
-    font-family:"IBM Plex Sans Condensed","IBM Plex Sans",sans-serif;
-    font-weight:700;font-size:1.5rem;letter-spacing:.01em;line-height:1.05;
-  }
-  .readouts{display:flex;gap:10px;flex-wrap:wrap}
-  .readout{
-    font-family:"IBM Plex Mono",monospace;
-    border:1px solid var(--rule);border-radius:8px;
-    background:var(--abyss);padding:6px 10px;min-width:78px;text-align:center;
-  }
-  .readout .k{font-size:.58rem;letter-spacing:.14em;color:var(--haze);text-transform:uppercase}
-  .readout .v{font-size:1.05rem;font-weight:600;color:var(--scope)}
-  .readout.amber .v{color:var(--amber)}
+  .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;background:linear-gradient(180deg,var(--steel),var(--hull));border-bottom:1px solid var(--rule)}
+  .crest{width:42px;height:42px;border-radius:9px;flex:none;background:radial-gradient(circle at 50% 35%,var(--scope),var(--scope-dim) 70%,#0b1a12);display:grid;place-items:center;box-shadow:var(--glow)}
+  .crest svg{width:24px;height:24px}
+  .title-block{flex:1;min-width:160px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--scope)}
+  h1{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",sans-serif;font-weight:700;font-size:1.5rem;line-height:1.05}
+  .hbtns{display:flex;gap:8px}
+  .iconbtn{width:40px;height:40px;border-radius:9px;border:1px solid var(--rule);background:var(--abyss);color:var(--haze);cursor:pointer;display:grid;place-items:center;transition:all .12s;position:relative}
+  .iconbtn:hover{color:var(--scope);border-color:var(--scope)}
+  .iconbtn svg{width:20px;height:20px}
+  .iconbtn .badge{position:absolute;top:-6px;right:-6px;background:var(--amber);color:#1a1205;font-family:"IBM Plex Mono",monospace;font-size:.6rem;font-weight:600;border-radius:99px;min-width:17px;height:17px;display:grid;place-items:center;padding:0 4px}
 
-  /* ---- rank bar ---- */
-  .rankbar{padding:12px 18px;border-bottom:1px solid var(--rule);background:var(--hull)}
-  .rankrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:7px}
-  .rankrow .now{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:600;font-size:.95rem}
-  .rankrow .next{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--haze)}
-  .track{height:7px;border-radius:99px;background:var(--abyss);border:1px solid var(--rule);overflow:hidden}
-  .fill{height:100%;width:0;background:linear-gradient(90deg,var(--scope-dim),var(--scope));transition:width .5s ease}
+  .levelbar{padding:13px 18px;border-bottom:1px solid var(--rule);background:var(--hull);display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .lvl-badge{display:flex;align-items:center;gap:11px;min-width:0}
+  .lvl-ring{width:46px;height:46px;flex:none;position:relative}
+  .lvl-ring svg{transform:rotate(-90deg)}
+  .lvl-ring .num{position:absolute;inset:0;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:1.05rem;color:var(--scope)}
+  .lvl-meta .now{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:600;font-size:.98rem;line-height:1.1}
+  .lvl-meta .nx{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--haze);margin-top:2px}
+  .ministats{margin-left:auto;display:flex;gap:9px;flex-wrap:wrap}
+  .mini{font-family:"IBM Plex Mono",monospace;border:1px solid var(--rule);border-radius:8px;background:var(--abyss);padding:6px 10px;text-align:center;min-width:62px}
+  .mini .k{font-size:.55rem;letter-spacing:.12em;color:var(--haze);text-transform:uppercase}
+  .mini .v{font-size:1.02rem;font-weight:600;color:var(--scope)}
+  .mini.amber .v{color:var(--amber)} .mini.violet .v{color:var(--violet)}
 
-  /* ---- body ---- */
   .stage{padding:20px 18px 24px}
 
-  /* hub */
-  .scope-hero{
-    position:relative;height:130px;border-radius:12px;overflow:hidden;margin-bottom:18px;
-    border:1px solid var(--rule);
-    background:radial-gradient(circle at 50% 120%, rgba(84,224,138,.16), transparent 55%), var(--abyss);
-  }
-  .grid-lines{position:absolute;inset:0;
-    background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);
-    background-size:34px 34px;opacity:.25}
-  .sweep{position:absolute;left:50%;bottom:0;width:50%;height:200%;transform-origin:left bottom;
-    background:conic-gradient(from 0deg at left bottom, rgba(84,224,138,.35), transparent 32%);
-    animation:sweep 4.5s linear infinite}
-  @keyframes sweep{to{transform:rotate(360deg)}}
-  .hero-cap{position:absolute;left:16px;bottom:12px;right:16px}
-  .hero-cap p{font-size:.85rem;color:var(--haze);max-width:560px}
+  .hero{position:relative;height:128px;border-radius:12px;overflow:hidden;margin-bottom:18px;border:1px solid var(--rule);background:var(--abyss)}
+  #scope{position:absolute;inset:0;width:100%;height:100%}
+  .hero-cap{position:absolute;left:16px;bottom:12px;right:16px;z-index:2}
+  .hero-cap p{font-size:.84rem;color:var(--haze);max-width:600px}
   .hero-cap strong{color:var(--chalk);font-weight:600}
 
+  .sect-label{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--haze);margin:6px 0 10px;display:flex;align-items:center;gap:8px}
+  .sect-label::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+  .activities{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+  .activity{cursor:pointer;text-align:left;color:inherit;border:1px solid var(--rule);border-radius:12px;padding:16px;position:relative;overflow:hidden;transition:transform .12s,border-color .12s,box-shadow .12s}
+  .activity:hover,.activity:focus-visible{transform:translateY(-3px);outline:none}
+  .activity.lightning{background:linear-gradient(135deg,rgba(255,180,84,.12),var(--steel))}
+  .activity.lightning:hover{border-color:var(--amber);box-shadow:0 0 16px rgba(255,180,84,.35)}
+  .activity.daily{background:linear-gradient(135deg,rgba(167,139,250,.12),var(--steel))}
+  .activity.daily:hover{border-color:var(--violet);box-shadow:0 0 16px rgba(167,139,250,.35)}
+  .activity .ico{width:30px;height:30px;margin-bottom:6px}
+  .activity.lightning .ico{color:var(--amber)} .activity.daily .ico{color:var(--violet)}
+  .activity h3{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.16rem;margin-bottom:3px}
+  .activity p{font-size:.78rem;color:var(--haze)}
+  .activity .tagrow{margin-top:9px;font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--haze)}
+  .activity.lightning .tagrow b{color:var(--amber)} .activity.daily .tagrow b{color:var(--violet)}
+
   .stations{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-  .station{
-    text-align:left;cursor:pointer;color:inherit;
-    border:1px solid var(--rule);border-radius:12px;padding:15px;
-    background:linear-gradient(180deg,var(--panel),var(--steel));
-    transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease;
-  }
+  .station{text-align:left;cursor:pointer;color:inherit;border:1px solid var(--rule);border-radius:12px;padding:15px;background:linear-gradient(180deg,var(--panel),var(--steel));transition:transform .12s,border-color .12s,box-shadow .12s}
   .station:hover,.station:focus-visible{transform:translateY(-3px);border-color:var(--scope);box-shadow:var(--glow);outline:none}
-  .station .mod{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.16em;color:var(--amber);text-transform:uppercase}
-  .station h3{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.12rem;margin:3px 0 5px}
-  .station p{font-size:.8rem;color:var(--haze)}
-  .station .ico{float:right;width:30px;height:30px;color:var(--scope);opacity:.9}
+  .station .mod{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.14em;color:var(--amber);text-transform:uppercase}
+  .station h3{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.1rem;margin:3px 0 5px}
+  .station p{font-size:.78rem;color:var(--haze);min-height:2.5em}
+  .station .ico{float:right;width:28px;height:28px;color:var(--scope);opacity:.9}
+  .mastery{margin-top:11px;display:flex;align-items:center;gap:8px}
+  .mtrack{flex:1;height:5px;border-radius:99px;background:var(--abyss);border:1px solid var(--rule);overflow:hidden}
+  .mfill{height:100%;width:0;background:linear-gradient(90deg,var(--scope-dim),var(--scope));transition:width .5s}
+  .mstars{font-size:.72rem;letter-spacing:1px}
 
-  /* game view */
   .gamehead{display:flex;align-items:center;gap:12px;margin-bottom:6px}
-  .back{
-    font-family:"IBM Plex Mono",monospace;font-size:.72rem;cursor:pointer;
-    background:var(--abyss);border:1px solid var(--rule);color:var(--haze);
-    border-radius:7px;padding:7px 11px;transition:color .12s,border-color .12s}
+  .back{font-family:"IBM Plex Mono",monospace;font-size:.72rem;cursor:pointer;background:var(--abyss);border:1px solid var(--rule);color:var(--haze);border-radius:7px;padding:7px 11px;transition:color .12s,border-color .12s}
   .back:hover{color:var(--scope);border-color:var(--scope)}
-  .gamehead h2{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.35rem}
-  .gamehead .mod{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.16em;color:var(--amber);text-transform:uppercase;display:block}
-  .prompt{font-size:.92rem;color:var(--haze);margin:4px 0 18px}
+  .gamehead h2{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:1.32rem}
+  .gamehead .mod{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;display:block}
+  .runbar{display:flex;align-items:center;gap:12px;margin:2px 0 14px;flex-wrap:wrap}
+  .timerwrap{flex:1;min-width:140px}
+  .timertrack{height:8px;border-radius:99px;background:var(--abyss);border:1px solid var(--rule);overflow:hidden}
+  .timerfill{height:100%;width:100%;background:linear-gradient(90deg,var(--amber),var(--signal))}
+  .runstat{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--haze)}
+  .runstat b{color:var(--scope)}
+  .combo{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;color:var(--amber);font-size:.9rem;opacity:0;transition:all .2s}
+  .combo.on{opacity:1}
 
-  .panelbox{
-    border:1px solid var(--rule);border-radius:12px;padding:20px;margin-bottom:16px;
-    background:radial-gradient(circle at 50% 0%, rgba(84,224,138,.05), transparent 60%), var(--steel);
-    text-align:center;
-  }
-  .bigreadout{font-family:"IBM Plex Mono",monospace;font-size:2.1rem;font-weight:600;color:var(--scope);text-shadow:var(--glow)}
+  .panelbox{border:1px solid var(--rule);border-radius:12px;padding:20px;margin-bottom:16px;background:radial-gradient(circle at 50% 0%,rgba(84,224,138,.05),transparent 60%),var(--steel);text-align:center}
+  .bigreadout{font-family:"IBM Plex Mono",monospace;font-size:2rem;font-weight:600;color:var(--scope);text-shadow:var(--glow)}
   .subreadout{font-family:"IBM Plex Mono",monospace;color:var(--haze);font-size:.78rem;margin-top:4px;letter-spacing:.04em}
-  .qtext{font-size:1.18rem;font-weight:600;font-family:"IBM Plex Sans Condensed",sans-serif}
+  .qtext{font-size:1.16rem;font-weight:600;font-family:"IBM Plex Sans Condensed",sans-serif}
+  .svg-stage{display:flex;justify-content:center;margin-bottom:6px}
+  .svg-stage svg{max-width:100%;height:auto}
 
   .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-  .opt{
-    cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:1rem;
-    border:1px solid var(--rule);border-radius:10px;padding:14px 12px;
-    background:var(--panel);color:var(--chalk);transition:all .12s ease}
+  .opt{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:1rem;border:1px solid var(--rule);border-radius:10px;padding:14px 12px;background:var(--panel);color:var(--chalk);transition:all .12s}
   .opt:hover:not(:disabled){border-color:var(--scope);color:var(--scope)}
   .opt:disabled{cursor:default;opacity:.85}
   .opt.correct{border-color:var(--scope);background:rgba(84,224,138,.14);color:var(--scope);box-shadow:var(--glow)}
@@ -150,17 +118,12 @@
 
   .feedback{margin-top:16px;border-radius:10px;padding:13px 15px;font-size:.86rem;display:none;border:1px solid var(--rule);background:var(--hull)}
   .feedback.show{display:block}
-  .feedback .verdict{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.02em}
-  .feedback.good .verdict{color:var(--scope)}
-  .feedback.bad .verdict{color:var(--signal)}
+  .feedback .verdict{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:.95rem}
+  .feedback.good .verdict{color:var(--scope)} .feedback.bad .verdict{color:var(--signal)}
   .feedback .why{color:var(--haze);margin-top:4px}
   .feedback .why b{color:var(--chalk);font-weight:600}
 
-  .nextbtn{
-    margin-top:14px;display:none;cursor:pointer;
-    font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.03em;
-    background:linear-gradient(180deg,var(--scope),var(--scope-dim));color:#06160d;
-    border:none;border-radius:9px;padding:12px 22px}
+  .nextbtn{margin-top:14px;display:none;cursor:pointer;font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.03em;background:linear-gradient(180deg,var(--scope),var(--scope-dim));color:#06160d;border:none;border-radius:9px;padding:12px 22px}
   .nextbtn.show{display:inline-block}
   .nextbtn:hover{filter:brightness(1.08)}
 
@@ -170,494 +133,478 @@
   .chip{font-family:"IBM Plex Mono",monospace;font-size:.68rem;border:1px solid var(--rule);border-radius:6px;padding:4px 8px;display:flex;align-items:center;gap:6px}
   .swatch{width:12px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.25)}
 
-  /* resistor + symbol svg holders */
-  .svg-stage{display:flex;justify-content:center;margin-bottom:6px}
-  .svg-stage svg{max-width:100%;height:auto}
+  .results{text-align:center;border:1px solid var(--rule);border-radius:14px;padding:28px 20px;background:radial-gradient(circle at 50% 0%,rgba(84,224,138,.07),transparent 60%),var(--steel)}
+  .results .rbig{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:2.4rem;color:var(--scope);text-shadow:var(--glow)}
+  .results .rsub{color:var(--haze);font-size:.9rem;margin-top:2px}
+  .results .rstats{display:flex;justify-content:center;gap:22px;margin:18px 0;flex-wrap:wrap}
+  .results .rstat .v{font-family:"IBM Plex Mono",monospace;font-size:1.5rem;font-weight:600}
+  .results .rstat .k{font-size:.62rem;letter-spacing:.12em;color:var(--haze);text-transform:uppercase}
+  .results .rbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .pbtn{cursor:pointer;font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:.92rem;border-radius:9px;padding:12px 22px;border:1px solid var(--rule);background:var(--panel);color:var(--chalk);transition:all .12s}
+  .pbtn:hover{border-color:var(--scope);color:var(--scope)}
+  .pbtn.primary{background:linear-gradient(180deg,var(--scope),var(--scope-dim));color:#06160d;border:none}
+  .pbtn.primary:hover{filter:brightness(1.08);color:#06160d}
 
-  /* rank-up toast */
-  .toast{
-    position:fixed;left:50%;top:22px;transform:translateX(-50%) translateY(-140%);
-    background:linear-gradient(180deg,var(--scope),var(--scope-dim));color:#06160d;
-    font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;
-    padding:12px 22px;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.5);
-    transition:transform .45s cubic-bezier(.2,1.2,.3,1);z-index:50;text-align:center}
-  .toast .sm{display:block;font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:.68rem;letter-spacing:.1em;opacity:.8}
+  .achgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}
+  .ach{border:1px solid var(--rule);border-radius:11px;padding:13px;display:flex;gap:12px;align-items:flex-start;background:var(--steel);transition:opacity .2s}
+  .ach.locked{opacity:.42}
+  .ach .aico{width:34px;height:34px;flex:none;border-radius:8px;display:grid;place-items:center;background:var(--abyss);font-size:1.1rem}
+  .ach.unlocked .aico{background:radial-gradient(circle at 50% 35%,var(--amber),#7a5410);box-shadow:0 0 12px rgba(255,180,84,.4)}
+  .ach h4{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:.95rem;margin-bottom:2px}
+  .ach p{font-size:.74rem;color:var(--haze)}
+  .ach-foot{margin-top:18px;text-align:center}
+  .reset{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--haze);background:none;border:1px solid var(--rule);border-radius:7px;padding:8px 14px;cursor:pointer}
+  .reset:hover{color:var(--signal);border-color:var(--signal)}
+
+  .toast{position:fixed;left:50%;top:22px;transform:translateX(-50%) translateY(-160%);background:linear-gradient(180deg,var(--scope),var(--scope-dim));color:#06160d;font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;padding:12px 22px;border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .45s cubic-bezier(.2,1.2,.3,1);z-index:60;text-align:center;max-width:90vw}
+  .toast.ach{background:linear-gradient(180deg,var(--amber),#a9710f);color:#1a1205}
+  .toast .sm{display:block;font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:.66rem;letter-spacing:.1em;opacity:.85}
   .toast.show{transform:translateX(-50%) translateY(0)}
+
+  .floatxp{position:fixed;font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--scope);pointer-events:none;z-index:55;text-shadow:0 0 10px rgba(84,224,138,.6);animation:floatup 1s ease-out forwards}
+  @keyframes floatup{0%{opacity:0;transform:translateY(6px) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translateY(-34px) scale(1.1)}}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
 
   .foot{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--haze);margin-top:16px;letter-spacing:.05em}
   .hidden{display:none!important}
 
-  @media (max-width:520px){
-    body{padding:10px}
-    .bigreadout{font-size:1.7rem}
-    h1{font-size:1.3rem}
+  @media (max-width:560px){
+    body{padding:10px} h1{font-size:1.3rem} .bigreadout{font-size:1.65rem} .activities{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
-    .sweep{animation:none;opacity:.18}
-    .station{transition:none}
-    .toast{transition:opacity .2s}
+    .station,.activity{transition:none} .floatxp{animation:none} .toast{transition:opacity .2s}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="console">
-    <!-- HEADER -->
     <div class="topbar">
-      <div class="crest" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#06160d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"></circle><path d="M12 3v18M3 12h18"></path><circle cx="12" cy="12" r="3" fill="#06160d"></circle>
-        </svg>
-      </div>
-      <div class="title-block">
-        <span class="eyebrow">Advanced Electronics / Computer Field</span>
-        <h1>AECF Training Deck</h1>
-      </div>
-      <div class="readouts">
-        <div class="readout"><div class="k">Score</div><div class="v" id="r-score">0</div></div>
-        <div class="readout amber"><div class="k">Streak</div><div class="v" id="r-streak">0</div></div>
+      <div class="crest" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#06160d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 6 16 3-8h4"/></svg></div>
+      <div class="title-block"><span class="eyebrow">Electronics Fundamentals · Interactive Drills</span><h1>Circuit Lab</h1></div>
+      <div class="hbtns">
+        <button class="iconbtn" id="btn-sound" title="Toggle sound" aria-label="Toggle sound"></button>
+        <button class="iconbtn" id="btn-trophy" title="Achievements" aria-label="Achievements">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v3a6 6 0 01-12 0z"/><path d="M6 5H3v2a3 3 0 003 3M18 5h3v2a3 3 0 01-3 3M9 19h6M10 13v6M14 13v6"/></svg>
+          <span class="badge hidden" id="ach-badge">0</span>
+        </button>
       </div>
     </div>
 
-    <!-- RANK -->
-    <div class="rankbar">
-      <div class="rankrow">
-        <span class="now" id="rank-now">E‑1 · Seaman Recruit</span>
-        <span class="next" id="rank-next">100 pts to next rate</span>
+    <div class="levelbar">
+      <div class="lvl-badge">
+        <div class="lvl-ring">
+          <svg width="46" height="46" viewBox="0 0 46 46">
+            <circle cx="23" cy="23" r="19" fill="none" stroke="#22323d" stroke-width="4"/>
+            <circle id="xp-ring" cx="23" cy="23" r="19" fill="none" stroke="var(--scope)" stroke-width="4" stroke-linecap="round" stroke-dasharray="119" stroke-dashoffset="119"/>
+          </svg>
+          <div class="num" id="lvl-num">1</div>
+        </div>
+        <div class="lvl-meta"><div class="now" id="lvl-name">Breadboard Rookie</div><div class="nx" id="lvl-next">0 / 100 XP</div></div>
       </div>
-      <div class="track"><div class="fill" id="rank-fill"></div></div>
+      <div class="ministats">
+        <div class="mini"><div class="k">XP</div><div class="v" id="m-xp">0</div></div>
+        <div class="mini amber"><div class="k">Combo</div><div class="v" id="m-streak">0</div></div>
+        <div class="mini violet"><div class="k">Day</div><div class="v" id="m-day">0</div></div>
+      </div>
     </div>
 
-    <!-- STAGE -->
     <div class="stage">
-      <!-- HUB -->
       <div id="hub">
-        <div class="scope-hero">
-          <div class="grid-lines"></div>
-          <div class="sweep"></div>
-          <div class="hero-cap">
-            <p><strong>Six watch stations.</strong> Each drills a slice of the pipeline an ET or FC sailor runs — from DC fundamentals to radar. Score points, build streaks, advance your rate.</p>
-          </div>
+        <div class="hero"><canvas id="scope"></canvas><div class="hero-cap"><p><strong>Six modules. Two challenge activities.</strong> Build XP, chain combos, and unlock achievements as you master electronics — from Ohm's law to logic gates.</p></div></div>
+
+        <div class="sect-label">Challenges</div>
+        <div class="activities">
+          <button class="activity lightning" id="act-lightning">
+            <svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>
+            <h3>Lightning Round</h3>
+            <p>60 seconds. Answer as many as you can. Wrong answers cost time.</p>
+            <div class="tagrow">Best: <b id="ll-best">0</b> correct &nbsp;·&nbsp; combo multipliers active</div>
+          </button>
+          <button class="activity daily" id="act-daily">
+            <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M8 14l2.5 2.5L15 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Daily Drill</h3>
+            <p>Five quick questions to keep your daily streak alive.</p>
+            <div class="tagrow">Day streak: <b id="dd-streak">0</b> &nbsp;·&nbsp; <span id="dd-status">ready</span></div>
+          </button>
         </div>
+
+        <div class="sect-label">Learn the Modules</div>
         <div class="stations" id="stations"></div>
-        <div class="foot">Curriculum mirrors the Navy Electricity &amp; Electronics Training Series (NEETS) · self‑study reference for 30+ ratings</div>
+        <div class="foot">Covers core electronics fundamentals — DC, AC, components, schematics, number systems, and digital logic.</div>
       </div>
 
-      <!-- GAME -->
       <div id="game" class="hidden">
-        <div class="gamehead">
-          <button class="back" id="back">‹ DECK</button>
-          <div><span class="mod" id="g-mod"></span><h2 id="g-title"></h2></div>
+        <div class="gamehead"><button class="back" id="back">‹ HUB</button><div><span class="mod" id="g-mod"></span><h2 id="g-title"></h2></div></div>
+        <div class="runbar">
+          <div class="timerwrap hidden" id="g-timerwrap"><div class="timertrack"><div class="timerfill" id="g-timerfill"></div></div></div>
+          <span class="runstat" id="g-runstat"></span>
+          <span class="combo" id="g-combo"></span>
         </div>
-        <p class="prompt" id="g-prompt"></p>
         <div id="g-visual"></div>
         <div class="options" id="g-options"></div>
-        <div class="feedback" id="g-feedback">
-          <div class="verdict" id="g-verdict"></div>
-          <div class="why" id="g-why"></div>
-        </div>
+        <div class="feedback" id="g-feedback"><div class="verdict" id="g-verdict"></div><div class="why" id="g-why"></div></div>
         <button class="nextbtn" id="g-next">Next ›</button>
         <div class="ref" id="g-ref"></div>
       </div>
+
+      <div id="result" class="hidden"></div>
+
+      <div id="ach-view" class="hidden">
+        <div class="gamehead"><button class="back" id="ach-back">‹ HUB</button><div><span class="mod">Progress</span><h2>Achievements</h2></div></div>
+        <div class="achgrid" id="ach-grid"></div>
+        <div class="ach-foot"><button class="reset" id="btn-reset">Reset all progress</button></div>
+      </div>
     </div>
   </div>
-  <div class="foot">For learners &amp; sailors · not an official Navy product · concepts only</div>
+  <div class="foot">For all learners interested in electronics</div>
 </div>
 
-<div class="toast" id="toast"><span class="sm">RATE ADVANCEMENT</span><span id="toast-rank"></span></div>
+<div class="toast" id="toast"><span class="sm" id="toast-sm">LEVEL UP</span><span id="toast-main"></span></div>
+<canvas id="confetti"></canvas>
 
 <script>
-/* ============ STATE ============ */
-const RANKS = [
-  {pts:0,   name:"E‑1 · Seaman Recruit"},
-  {pts:100, name:"E‑2 · Seaman Apprentice"},
-  {pts:250, name:"E‑3 · Seaman"},
-  {pts:500, name:"E‑4 · Petty Officer 3rd Class"},
-  {pts:850, name:"FC/ET · Qualified Technician"}
-];
-let state = {score:0, streak:0, rankIdx:0};
+/* ===== PERSISTENCE (safe) ===== */
+const KEY="circuitlab_v1"; const mem={}; let canStore=true;
+try{ localStorage.setItem("__t","1"); localStorage.removeItem("__t"); }catch(e){ canStore=false; }
+function loadState(){ try{ if(canStore){const r=localStorage.getItem(KEY); if(r) return JSON.parse(r);} else if(mem[KEY]) return mem[KEY]; }catch(e){} return null; }
+function persist(){ try{ const s=JSON.stringify(stats); if(canStore) localStorage.setItem(KEY,s); else mem[KEY]=JSON.parse(s); }catch(e){} }
+const DEFAULT={xp:0,totalCorrect:0,totalAnswered:0,bestStreak:0,moduleCorrect:{ohm:0,color:0,sym:0,num:0,gate:0,recon:0},unlocked:{},dayStreak:0,lastDay:null,lightningBest:0,_muted:false};
+let stats=Object.assign({},DEFAULT,loadState()||{});
+stats.moduleCorrect=Object.assign({ohm:0,color:0,sym:0,num:0,gate:0,recon:0},stats.moduleCorrect||{});
+stats.unlocked=stats.unlocked||{};
+let muted=!!stats._muted;
 
-/* ============ COLOR DATA (resistor) ============ */
-const COLORS = [
-  {n:"Black",h:"#0c0c0c",d:0},{n:"Brown",h:"#6b3f1d",d:1},{n:"Red",h:"#d32f2f",d:2},
-  {n:"Orange",h:"#f57c00",d:3},{n:"Yellow",h:"#fdd835",d:4},{n:"Green",h:"#2e7d32",d:5},
-  {n:"Blue",h:"#1565c0",d:6},{n:"Violet",h:"#7b1fa2",d:7},{n:"Grey",h:"#8a8a8a",d:8},{n:"White",h:"#f4f4f4",d:9}
+/* ===== LEVELS ===== */
+const LEVELS=[{xp:0,name:"Breadboard Rookie"},{xp:100,name:"Solder Apprentice"},{xp:250,name:"Circuit Technician"},{xp:450,name:"Signal Specialist"},{xp:700,name:"Systems Engineer"},{xp:1000,name:"Master Technologist"}];
+function levelInfo(xp){ let i=0; for(let k=0;k<LEVELS.length;k++) if(xp>=LEVELS[k].xp) i=k; const nx=LEVELS[i+1]||null; return {idx:i,name:LEVELS[i].name,curXp:LEVELS[i].xp,nextXp:nx?nx.xp:null}; }
+
+/* ===== ACHIEVEMENTS ===== */
+const ACH=[
+  {id:"spark",icon:"⚡",name:"First Spark",desc:"Answer your first question correctly.",chk:s=>s.totalCorrect>=1},
+  {id:"warmup",icon:"🔧",name:"Warmed Up",desc:"Get 10 correct answers total.",chk:s=>s.totalCorrect>=10},
+  {id:"fifty",icon:"📈",name:"Half-Century",desc:"Get 50 correct answers total.",chk:s=>s.totalCorrect>=50},
+  {id:"roll",icon:"🔥",name:"On a Roll",desc:"Reach a 5-answer combo.",chk:s=>s.bestStreak>=5},
+  {id:"unstoppable",icon:"💥",name:"Unstoppable",desc:"Reach a 10-answer combo.",chk:s=>s.bestStreak>=10},
+  {id:"speed",icon:"⏱️",name:"Speed Demon",desc:"Answer correctly in under 3 seconds.",chk:s=>!!s._fast},
+  {id:"ohm",icon:"🔌",name:"Ohm's Disciple",desc:"10 correct in Ohm's Law.",chk:s=>s.moduleCorrect.ohm>=10},
+  {id:"color",icon:"🌈",name:"Band Reader",desc:"10 correct in Resistor Color Code.",chk:s=>s.moduleCorrect.color>=10},
+  {id:"sym",icon:"📐",name:"Symbol Savant",desc:"10 correct in Schematic Symbols.",chk:s=>s.moduleCorrect.sym>=10},
+  {id:"num",icon:"💾",name:"Bit Wizard",desc:"10 correct in Number Systems.",chk:s=>s.moduleCorrect.num>=10},
+  {id:"gate",icon:"🧠",name:"Logic Lord",desc:"10 correct in Logic Gates.",chk:s=>s.moduleCorrect.gate>=10},
+  {id:"polymath",icon:"🎓",name:"Polymath",desc:"Get a correct answer in all six modules.",chk:s=>Object.values(s.moduleCorrect).every(v=>v>=1)},
+  {id:"century",icon:"🏅",name:"Centurion",desc:"Earn 100 XP.",chk:s=>s.xp>=100},
+  {id:"lace",icon:"⚡",name:"Lightning Ace",desc:"Get 15 correct in one Lightning Round.",chk:s=>s.lightningBest>=15},
+  {id:"flawless",icon:"✨",name:"Flawless",desc:"Finish a Lightning Round with 10+ correct and zero misses.",chk:s=>!!s._flawless},
+  {id:"dedicated",icon:"📅",name:"Dedicated",desc:"Reach a 3-day streak.",chk:s=>s.dayStreak>=3}
 ];
 
-/* ============ HELPERS ============ */
-const $ = id => document.getElementById(id);
-const rand = n => Math.floor(Math.random()*n);
-const pick = a => a[rand(a.length)];
+/* ===== SOUND ===== */
+let actx=null;
+function ensureAudio(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==="suspended") actx.resume(); }
+function tone(freq,dur,type,vol,delay){ if(muted||!actx) return; type=type||"sine"; vol=vol||.16; delay=delay||0;
+  const t=actx.currentTime+delay,o=actx.createOscillator(),g=actx.createGain();
+  o.type=type;o.frequency.value=freq;o.connect(g);g.connect(actx.destination);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur); }
+const sCorrect=()=>{tone(660,.12,"sine",.16);tone(880,.14,"sine",.14,.07)};
+const sWrong=()=>tone(180,.22,"sawtooth",.12);
+const sLevel=()=>[523,659,784,1046].forEach((f,i)=>tone(f,.28,"triangle",.16,i*.09));
+const sAch=()=>[784,988,1318].forEach((f,i)=>tone(f,.22,"sine",.15,i*.07));
+
+/* ===== HELPERS ===== */
+const $=id=>document.getElementById(id);
+const rand=n=>Math.floor(Math.random()*n);
+const pick=a=>a[rand(a.length)];
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
-function fmtOhms(v){ if(v>=1e6)return (v/1e6)+" MΩ"; if(v>=1e3)return (v/1e3)+" kΩ"; return v+" Ω"; }
+function fmtOhms(v){ if(v>=1e6)return(v/1e6)+" MΩ"; if(v>=1e3)return(v/1e3)+" kΩ"; return v+" Ω"; }
+function today(){ const d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
+function dayDiff(a,b){ return Math.round((new Date(b)-new Date(a))/86400000); }
 
-/* ============ STATION DEFINITIONS ============ */
-const STATIONS = [
-  {id:"ohm",   mod:"NEETS 01 · DC",            title:"Ohm's Law Console",    blurb:"Solve for voltage, current, or resistance on a live meter.", icon:"meter"},
-  {id:"color", mod:"NEETS 04 · Components",    title:"Resistor Color Code",  blurb:"Read the bands. Call the value before the watch supervisor does.", icon:"resistor"},
-  {id:"sym",   mod:"NEETS 04 · Schematics",    title:"Schematic Symbols",    blurb:"Identify the part from its print symbol.", icon:"diode"},
-  {id:"num",   mod:"NEETS 13 · Number Systems",title:"Number Systems",       blurb:"Convert between binary, hex, and decimal.", icon:"binary"},
-  {id:"gate",  mod:"NEETS 13 · Logic",         title:"Logic Gates",          blurb:"Given the inputs, call the output. 0 or 1.", icon:"gate"},
-  {id:"recon", mod:"NEETS 02–24 · Breadth",    title:"Rating Recon",         blurb:"AC, radar, antennas, microwave, fiber — the whole pipeline.", icon:"radar"}
-];
-
-const ICONS = {
-  meter:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15l5-6 3 3"/><circle cx="17" cy="9" r="1"/></svg>',
-  resistor:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12h3l2-5 4 10 4-10 2 5h3"/></svg>',
-  diode:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h5m8 0h5"/><path d="M8 7v10l8-5-8-5z" fill="currentColor"/><path d="M16 7v10"/></svg>',
-  binary:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" font-family="monospace"><text x="3" y="10" font-size="9" fill="currentColor" stroke="none">10</text><text x="3" y="20" font-size="9" fill="currentColor" stroke="none">01</text></svg>',
-  gate:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h6a6 6 0 010 12H4z"/><path d="M2 9h2M2 15h2M16 12h6"/></svg>',
-  radar:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>'
-};
-
-/* ============ RENDER HUB ============ */
-function renderHub(){
-  $("stations").innerHTML = STATIONS.map(s=>`
-    <button class="station" data-id="${s.id}">
-      ${ICONS[s.icon]}
-      <span class="mod">${s.mod}</span>
-      <h3>${s.title}</h3>
-      <p>${s.blurb}</p>
-    </button>`).join("");
-  document.querySelectorAll(".station").forEach(b=>b.onclick=()=>openGame(b.dataset.id));
-}
-
-/* ============ SCORING ============ */
-function award(correct){
-  if(correct){
-    state.streak++;
-    const bonus = Math.min(state.streak-1,5)*2;   // streak bonus up to +10
-    state.score += 10 + bonus;
-  } else {
-    state.streak = 0;
-  }
-  // rank check
-  let newIdx = state.rankIdx;
-  while(newIdx < RANKS.length-1 && state.score >= RANKS[newIdx+1].pts) newIdx++;
-  if(newIdx > state.rankIdx){ state.rankIdx = newIdx; rankToast(RANKS[newIdx].name); }
-  updateHUD();
-}
-function updateHUD(){
-  $("r-score").textContent = state.score;
-  $("r-streak").textContent = state.streak;
-  const cur = RANKS[state.rankIdx];
-  const nxt = RANKS[state.rankIdx+1];
-  $("rank-now").textContent = cur.name;
-  if(nxt){
-    const span = nxt.pts - cur.pts;
-    const into = Math.min(state.score - cur.pts, span);
-    $("rank-fill").style.width = (100*into/span)+"%";
-    $("rank-next").textContent = (nxt.pts - state.score)+" pts to next rate";
-  } else {
-    $("rank-fill").style.width = "100%";
-    $("rank-next").textContent = "Top rate achieved";
-  }
-}
-let toastTimer;
-function rankToast(name){
-  $("toast-rank").textContent = name;
-  const t = $("toast"); t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove("show"),2600);
-}
-
-/* ============ GAME SHELL ============ */
-let current=null;
-function openGame(id){
-  current = id;
-  const s = STATIONS.find(x=>x.id===id);
-  $("hub").classList.add("hidden");
-  $("game").classList.remove("hidden");
-  $("g-mod").textContent = s.mod;
-  $("g-title").textContent = s.title;
-  $("g-prompt").textContent = s.blurb;
-  nextRound();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-$("back").onclick = ()=>{
-  $("game").classList.add("hidden");
-  $("hub").classList.remove("hidden");
-};
-$("g-next").onclick = nextRound;
-
-/* build one round for the current game */
-function nextRound(){
-  $("g-feedback").className = "feedback";
-  $("g-next").className = "nextbtn";
-  $("g-visual").innerHTML = "";
-  $("g-ref").innerHTML = "";
-  const builders = {ohm:roundOhm, color:roundColor, sym:roundSym, num:roundNum, gate:roundGate, recon:roundRecon};
-  builders[current]();
-}
-
-/* render a standard multiple-choice round
-   q = {visual?, refHTML?, choices:[{label,correct}], why(isWin,chosen)->string} */
-function renderMC(q){
-  if(q.visual) $("g-visual").innerHTML = q.visual;
-  if(q.refHTML) $("g-ref").innerHTML = q.refHTML;
-  const opts = $("g-options");
-  opts.innerHTML = "";
-  q.choices.forEach(c=>{
-    const b=document.createElement("button");
-    b.className="opt"; b.textContent=c.label;
-    b.onclick=()=>{
-      document.querySelectorAll(".opt").forEach(x=>x.disabled=true);
-      const win = !!c.correct;
-      b.classList.add(win?"correct":"wrong");
-      if(!win) document.querySelectorAll(".opt").forEach(x=>{ if(q.choices[[...opts.children].indexOf(x)].correct) x.classList.add("correct"); });
-      const fb=$("g-feedback");
-      fb.classList.add("show", win?"good":"bad");
-      $("g-verdict").textContent = win ? pick(["Solid copy.","On target.","Aye — correct.","Good track."]) : "Negative.";
-      $("g-why").innerHTML = q.why(win,c.label);
-      $("g-next").classList.add("show");
-      award(win);
-    };
-    opts.appendChild(b);
-  });
-}
-
-/* ============ GAME 1: OHM'S LAW ============ */
-function roundOhm(){
-  const R = pick([10,22,47,100,150,220,330,470,680,1000]);
-  const I = pick([0.05,0.1,0.2,0.25,0.5,1,1.5,2]);
-  const V = +(I*R).toFixed(2);
-  const solveFor = pick(["V","I","R"]);
-  let given, ask, answer, unit;
-  if(solveFor==="V"){ given=`I = ${I} A   ·   R = ${R} Ω`; ask="V = ?"; answer=V; unit="V"; }
-  if(solveFor==="I"){ given=`V = ${V} V   ·   R = ${R} Ω`; ask="I = ?"; answer=I; unit="A"; }
-  if(solveFor==="R"){ given=`V = ${V} V   ·   I = ${I} A`; ask="R = ?"; answer=R; unit="Ω"; }
-
-  // build 4 plausible numeric choices
-  const set=new Set([answer]);
-  while(set.size<4){
-    const f = pick([0.5,2,1.5,0.25,3,4]);
-    let cand = +(answer*f).toFixed(2);
-    if(cand!==answer && cand>0) set.add(cand);
-  }
-  const choices = shuffle([...set]).map(v=>({label:`${v} ${unit}`,correct:v===answer}));
-
-  renderMC({
-    visual:`<div class="panelbox"><div class="bigreadout">${ask}</div><div class="subreadout">${given}</div></div>
-            <p class="qtext" style="text-align:center;margin-bottom:14px">What does the meter read?</p>`,
-    refHTML:`<b>OHM'S LAW</b> &nbsp; V = I × R &nbsp;·&nbsp; I = V ÷ R &nbsp;·&nbsp; R = V ÷ I &nbsp;— volts, amps, ohms.`,
-    choices,
-    why:(win)=>{
-      const work = solveFor==="V" ? `V = I × R = ${I} × ${R} = <b>${V} V</b>`
-                 : solveFor==="I" ? `I = V ÷ R = ${V} ÷ ${R} = <b>${I} A</b>`
-                 : `R = V ÷ I = ${V} ÷ ${I} = <b>${R} Ω</b>`;
-      return win ? `${work}. The three quantities always tie together this way.`
-                 : `Work the triangle: ${work}.`;
-    }
-  });
-}
-
-/* ============ GAME 2: RESISTOR COLOR CODE ============ */
-function roundColor(){
-  // 4-band: 2 significant digits + multiplier (+ gold tolerance, fixed)
-  const d1 = 1+rand(9);            // first band 1-9 (avoid leading black)
-  const d2 = rand(10);
-  const mult = rand(5);            // 10^0 .. 10^4
-  const value = (d1*10+d2)*Math.pow(10,mult);
-  const bands=[COLORS[d1],COLORS[d2],COLORS[mult]];
-
-  const set=new Set([value]);
-  while(set.size<4){
-    const dd1=1+rand(9), dd2=rand(10), mm=rand(5);
-    const v=(dd1*10+dd2)*Math.pow(10,mm);
-    set.add(v);
-  }
-  const choices = shuffle([...set]).map(v=>({label:fmtOhms(v),correct:v===value}));
-
-  // SVG resistor with bands
-  const bx=[78,98,118];
-  const bandSvg=bands.map((c,i)=>`<rect x="${bx[i]}" y="20" width="11" height="40" fill="${c.h}"/>`).join("");
-  const visual=`
-    <div class="svg-stage"><svg viewBox="0 0 240 80" width="300">
-      <line x1="6" y1="40" x2="60" y2="40" stroke="#9aa" stroke-width="3"/>
-      <line x1="180" y1="40" x2="234" y2="40" stroke="#9aa" stroke-width="3"/>
-      <rect x="60" y="18" width="120" height="44" rx="20" fill="#cdb89a" stroke="#7a6b52" stroke-width="2"/>
-      ${bandSvg}
-      <rect x="150" y="20" width="11" height="40" fill="#c9a227"/>
-    </svg></div>
-    <p class="qtext" style="text-align:center;margin:6px 0 14px">Bands: <span style="color:var(--scope)">${bands[0].n} · ${bands[1].n} · ${bands[2].n}</span> · Gold</p>`;
-
-  const chips = COLORS.map(c=>`<span class="chip"><span class="swatch" style="background:${c.h}"></span>${c.d} ${c.n}</span>`).join("");
-
-  renderMC({
-    visual,
-    refHTML:`<b>BAND DECODE</b> &nbsp; 1st digit · 2nd digit · multiplier (×10ⁿ) · tolerance. <div class="chips">${chips}</div>`,
-    choices,
-    why:(win)=>`${bands[0].n}=${d1}, ${bands[1].n}=${d2} → <b>${d1}${d2}</b>, then ×10<sup>${mult}</sup> (${bands[2].n}) = <b>${fmtOhms(value)}</b>. Gold = ±5% tolerance.`
-  });
-}
-
-/* ============ GAME 3: SCHEMATIC SYMBOLS ============ */
-const SYMS = {
+/* ===== CONTENT DATA ===== */
+const COLORS=[{n:"Black",h:"#0c0c0c",d:0},{n:"Brown",h:"#6b3f1d",d:1},{n:"Red",h:"#d32f2f",d:2},{n:"Orange",h:"#f57c00",d:3},{n:"Yellow",h:"#fdd835",d:4},{n:"Green",h:"#2e7d32",d:5},{n:"Blue",h:"#1565c0",d:6},{n:"Violet",h:"#7b1fa2",d:7},{n:"Grey",h:"#8a8a8a",d:8},{n:"White",h:"#f4f4f4",d:9}];
+const SYMS={
   Resistor:'<path d="M10 40h22l6-16 12 32 12-32 12 32 6-16h22" fill="none" stroke="var(--scope)" stroke-width="3"/>',
   Capacitor:'<path d="M10 40h44M86 40h44M64 18v44M76 18v44" fill="none" stroke="var(--scope)" stroke-width="3"/>',
   Inductor:'<path d="M10 40h22a8 8 0 0116 0 8 8 0 0116 0 8 8 0 0116 0 8 8 0 0116 0h18" fill="none" stroke="var(--scope)" stroke-width="3"/>',
   Diode:'<path d="M10 40h44M86 40h44M54 24v32M86 24v32M54 24l32 16-32 16z" fill="var(--scope)" stroke="var(--scope)" stroke-width="2.5"/>',
   Ground:'<path d="M70 12v18M52 30h36M58 38h24M64 46h12" fill="none" stroke="var(--scope)" stroke-width="3"/>',
-  Battery:'<path d="M10 40h36M94 40h36M46 24v32M70 30v20M70 30M94 24v32M58 30v20" fill="none" stroke="var(--scope)" stroke-width="3"/>',
+  Battery:'<path d="M10 40h36M94 40h36M46 24v32M70 30v20M94 24v32M58 30v20" fill="none" stroke="var(--scope)" stroke-width="3"/>',
   Switch:'<path d="M10 40h34M96 40h34M44 40l44-22" fill="none" stroke="var(--scope)" stroke-width="3"/><circle cx="44" cy="40" r="4" fill="var(--scope)"/><circle cx="96" cy="40" r="4" fill="var(--scope)"/>',
-  Transistor:'<circle cx="70" cy="40" r="22" fill="none" stroke="var(--scope)" stroke-width="2.5"/><path d="M40 40h18M58 24v32M58 32l24-14M58 48l24 14M82 12v14M82 54v14M82 26h0" fill="none" stroke="var(--scope)" stroke-width="3"/><path d="M70 56l12 6-4-9z" fill="var(--scope)"/>'
+  Transistor:'<circle cx="70" cy="40" r="22" fill="none" stroke="var(--scope)" stroke-width="2.5"/><path d="M40 40h18M58 24v32M58 32l24-14M58 48l24 14M82 12v14M82 54v14" fill="none" stroke="var(--scope)" stroke-width="3"/><path d="M70 56l12 6-4-9z" fill="var(--scope)"/>'
 };
-const SYM_WHY = {
+const SYM_WHY={
   Resistor:"Zig-zag body = a resistor. Opposes current flow; value set by its color bands.",
   Capacitor:"Two parallel plates = a capacitor. Stores energy in an electric field; blocks DC, passes AC.",
   Inductor:"A series of coils = an inductor. Stores energy in a magnetic field; opposes change in current.",
-  Diode:"Triangle pointing into a bar = a diode. One‑way valve for current; the bar is the cathode.",
-  Ground:"Stacked descending lines = ground — the common 0‑volt reference point.",
-  Battery:"Alternating long/short plates = a battery / DC source. Long line is positive.",
+  Diode:"Triangle pointing into a bar = a diode. One-way valve for current; the bar is the cathode.",
+  Ground:"Stacked descending lines = ground — the common 0-volt reference point.",
+  Battery:"Alternating long/short plates = a battery / DC source. The long line is positive.",
   Switch:"A hinged lever between two contacts = a switch. Opens or closes the circuit.",
-  Transistor:"Circle with base, emitter (arrow), collector = a transistor. Amplifies or switches signals."
+  Transistor:"Circle with base, emitter (arrow) and collector = a transistor. Amplifies or switches signals."
 };
-function roundSym(){
-  const names = Object.keys(SYMS);
-  const ans = pick(names);
-  const choices = shuffle([ans, ...shuffle(names.filter(n=>n!==ans)).slice(0,3)])
-    .map(n=>({label:n,correct:n===ans}));
-  renderMC({
-    visual:`<div class="panelbox"><div class="svg-stage"><svg viewBox="0 0 140 80" width="220">${SYMS[ans]}</svg></div>
-            <p class="qtext" style="margin-top:6px">Identify this schematic symbol</p></div>`,
-    refHTML:`<b>PRINT READING</b> &nbsp; Every component has a standard symbol — schematics are the tech's road map.`,
-    choices,
-    why:()=>SYM_WHY[ans]
-  });
-}
-
-/* ============ GAME 4: NUMBER SYSTEMS ============ */
-function roundNum(){
-  const dec = 1+rand(254);                       // 1..254
-  const mode = pick(["dec2bin","bin2dec","dec2hex","hex2dec"]);
-  const bin = dec.toString(2).padStart(8,"0");
-  const hex = dec.toString(16).toUpperCase();
-  let show, ask, answer, base;
-  if(mode==="dec2bin"){ show=`${dec}₁₀`; ask="Binary (8‑bit)?"; answer=bin; base="bin"; }
-  if(mode==="bin2dec"){ show=`${bin}₂`; ask="Decimal?"; answer=String(dec); base="dec"; }
-  if(mode==="dec2hex"){ show=`${dec}₁₀`; ask="Hexadecimal?"; answer="0x"+hex; base="hex"; }
-  if(mode==="hex2dec"){ show=`0x${hex}`; ask="Decimal?"; answer=String(dec); base="dec"; }
-
-  const set=new Set([answer]);
-  while(set.size<4){
-    const off = pick([1,-1,2,-2,8,16,-16,3]);
-    let n = dec+off; if(n<0||n>255) continue;
-    let alt = base==="bin"? n.toString(2).padStart(8,"0")
-            : base==="hex"? "0x"+n.toString(16).toUpperCase()
-            : String(n);
-    set.add(alt);
-  }
-  const choices = shuffle([...set]).map(v=>({label:v,correct:v===answer}));
-  renderMC({
-    visual:`<div class="panelbox"><div class="bigreadout">${show}</div><div class="subreadout">${ask}</div></div>`,
-    refHTML:`<b>BASES</b> &nbsp; Binary = base‑2 (0/1) · Decimal = base‑10 · Hex = base‑16 (0–9, A–F). One hex digit = 4 bits.`,
-    choices,
-    why:(win)=>`${dec}₁₀ = <b>${bin}₂</b> = <b>0x${hex}</b>. Computers think in binary; hex is the shorthand techs read it in.`
-  });
-}
-
-/* ============ GAME 5: LOGIC GATES ============ */
-const GATES = {
-  AND:{f:(a,b)=>a&b, d:"AND — output is 1 only when BOTH inputs are 1."},
-  OR:{f:(a,b)=>a|b, d:"OR — output is 1 when AT LEAST ONE input is 1."},
-  XOR:{f:(a,b)=>a^b, d:"XOR (exclusive OR) — output is 1 only when inputs DIFFER."},
-  NAND:{f:(a,b)=>a&b?0:1, d:"NAND — AND, then inverted. 0 only when both inputs are 1."},
-  NOR:{f:(a,b)=>(a|b)?0:1, d:"NOR — OR, then inverted. 1 only when both inputs are 0."},
-  NOT:{f:(a)=>a?0:1, d:"NOT (inverter) — flips the single input. 1↔0."}
-};
-function gateSvg(name){
-  const body = name==="NOT"
-    ? '<path d="M40 18L90 40 40 62z" fill="none" stroke="var(--scope)" stroke-width="3"/><circle cx="96" cy="40" r="5" fill="none" stroke="var(--scope)" stroke-width="3"/>'
-    : (name==="OR"||name==="NOR"||name==="XOR")
-      ? '<path d="M38 18q34 4 52 22-18 18-52 22q14-22 0-44z" fill="none" stroke="var(--scope)" stroke-width="3"/>'
-      : '<path d="M40 18h26a22 22 0 010 44H40z" fill="none" stroke="var(--scope)" stroke-width="3"/>';
-  const bubble = (name==="NAND"||name==="NOR")?'<circle cx="96" cy="40" r="5" fill="none" stroke="var(--scope)" stroke-width="3"/>':'';
-  const xorBar = name==="XOR"?'<path d="M30 20q-14 20 0 40" fill="none" stroke="var(--scope)" stroke-width="3"/>':'';
-  return `<svg viewBox="0 0 120 80" width="200">${xorBar}${body}${bubble}</svg>`;
-}
-function roundGate(){
-  const names = Object.keys(GATES);
-  const name = pick(names);
-  const single = name==="NOT";
-  const a = rand(2), b = rand(2);
-  const out = single ? GATES[name].f(a) : GATES[name].f(a,b);
-  const inLabel = single ? `A = ${a}` : `A = ${a} , B = ${b}`;
-  const choices = shuffle([{label:"0",correct:out===0},{label:"1",correct:out===1}]);
-  renderMC({
-    visual:`<div class="panelbox"><div class="svg-stage">${gateSvg(name)}</div>
-            <div class="bigreadout" style="font-size:1.5rem">${name}</div>
-            <div class="subreadout">Inputs &nbsp; ${inLabel}</div></div>
-            <p class="qtext" style="text-align:center;margin-bottom:14px">Output?</p>`,
-    refHTML:`<b>LOGIC</b> &nbsp; Gates are the building blocks of every digital circuit and computer in the fleet.`,
-    choices,
-    why:()=>`${GATES[name].d} With ${inLabel}, output = <b>${out}</b>.`
-  });
-}
-
-/* ============ GAME 6: RATING RECON (breadth) ============ */
-const RECON = [
-  {q:"RADAR is an acronym for…", a:"RAdio Detection And Ranging",
-   wr:["Rapid Aerial Defense And Response","Radio Amplitude Detection And Reading","Range Adjusted Directional Antenna Receiver"],
-   why:"Radar sends out radio pulses and times the echo to find range and bearing of a target. (NEETS 18)"},
-  {q:"A transformer with more turns on the secondary than the primary is a…", a:"Step‑up transformer",
-   wr:["Step‑down transformer","Isolation choke","Rectifier"],
-   why:"More secondary turns → higher secondary voltage = step‑up. Voltage ratio follows the turns ratio. (NEETS 02)"},
-  {q:"In the U.S., standard AC line frequency is…", a:"60 Hz",
-   wr:["50 Hz","120 Hz","400 Hz"],
-   why:"U.S. commercial power is 60 cycles per second. (Shipboard systems often run 60 Hz; some use 400 Hz.) (NEETS 02)"},
-  {q:"A diode's main job in a power supply is to…", a:"Rectify AC into DC",
-   wr:["Amplify the signal","Store charge","Increase frequency"],
-   why:"Diodes pass current one way, converting alternating current to pulsating DC — rectification. (NEETS 07)"},
-  {q:"Fiber‑optic cable carries signals as…", a:"Pulses of light",
-   wr:["Radio waves","Magnetic flux","Direct current"],
-   why:"Light is guided down the fiber by total internal reflection — fast, and immune to EMI. (NEETS 24)"},
-  {q:"A capacitor stores energy in a(n)…", a:"Electric field",
-   wr:["Magnetic field","Resistive load","Gravitational field"],
-   why:"Capacitors store charge in the electric field between their plates; inductors use a magnetic field. (NEETS 02)"},
-  {q:"The microwave band sits…", a:"Above ~1 GHz, below infrared",
-   wr:["Below the audio range","Between AM and FM radio","Above visible light"],
-   why:"Microwaves are very‑high‑frequency radio waves used for radar and comms. (NEETS 11)"},
-  {q:"A synchro is used to…", a:"Transmit angular position electrically",
-   wr:["Rectify three‑phase power","Filter RF noise","Store digital data"],
-   why:"Synchros pass shaft-angle data between equipment — think gun-mount or antenna positioning. (NEETS 15)"},
-  {q:"An antenna's job is to…", a:"Convert between guided signals and radiated waves",
-   wr:["Amplify DC voltage","Regulate current","Store electric charge"],
-   why:"Antennas couple a transmitter/receiver to free space, radiating or capturing electromagnetic waves. (NEETS 10)"},
-  {q:"In AM radio, the 'AM' modulates the carrier's…", a:"Amplitude",
-   wr:["Frequency","Phase","Polarity"],
-   why:"Amplitude Modulation varies the carrier's strength with the signal; FM varies frequency instead. (NEETS 12)"},
-  {q:"The decibel (dB) is a measure of…", a:"A ratio of two power/voltage levels",
-   wr:["Absolute voltage","Frequency","Resistance"],
-   why:"The dB expresses gain or loss as a logarithmic ratio — handy across huge signal ranges. (NEETS 21)"},
-  {q:"A transistor can act as both an amplifier and a…", a:"Switch",
-   wr:["Transformer","Antenna","Fuse"],
-   why:"Bias it in the active region to amplify; drive it hard to use it as an on/off switch. (NEETS 07)"},
-  {q:"An inductor opposes a change in…", a:"Current",
-   wr:["Voltage","Resistance","Temperature"],
-   why:"By Lenz's law, an inductor resists changes in current through it. Capacitors resist changes in voltage. (NEETS 02)"},
-  {q:"Shipboard equipment is grounded primarily to…", a:"Protect personnel and provide a reference",
-   wr:["Boost signal gain","Increase resistance","Generate AC"],
-   why:"Grounding gives fault current a safe path and a common 0V reference — safety first. (NEETS 03)"},
-  {q:"An oscilloscope primarily displays…", a:"Voltage versus time (a waveform)",
-   wr:["Resistance versus current","Frequency versus power","Temperature versus time"],
-   why:"The scope plots a signal's voltage over time so you can see its shape — a core test instrument. (NEETS 16)"}
+const GATES={AND:{f:(a,b)=>a&b,d:"AND — output is 1 only when BOTH inputs are 1."},OR:{f:(a,b)=>a|b,d:"OR — output is 1 when AT LEAST ONE input is 1."},XOR:{f:(a,b)=>a^b,d:"XOR (exclusive OR) — output is 1 only when the inputs DIFFER."},NAND:{f:(a,b)=>a&b?0:1,d:"NAND — AND, then inverted. 0 only when both inputs are 1."},NOR:{f:(a,b)=>(a|b)?0:1,d:"NOR — OR, then inverted. 1 only when both inputs are 0."},NOT:{f:a=>a?0:1,d:"NOT (inverter) — flips the single input. 1↔0."}};
+const RECON=[
+  {q:"RADAR is an acronym for…",a:"RAdio Detection And Ranging",wr:["Rapid Aerial Defense And Response","Radio Amplitude Detection And Reading","Range Adjusted Directional Antenna Receiver"],why:"Radar sends out radio pulses and times the echo to measure a target's range and bearing."},
+  {q:"A transformer with more turns on the secondary than the primary is a…",a:"Step-up transformer",wr:["Step-down transformer","Isolation choke","Rectifier"],why:"More secondary turns → higher secondary voltage = step-up. Voltage follows the turns ratio."},
+  {q:"In North America, standard AC line frequency is…",a:"60 Hz",wr:["50 Hz","120 Hz","400 Hz"],why:"North American mains run at 60 cycles per second; much of the world uses 50 Hz."},
+  {q:"A diode's main job in a power supply is to…",a:"Rectify AC into DC",wr:["Amplify the signal","Store charge","Increase frequency"],why:"Diodes pass current one way, converting alternating current to pulsating DC — rectification."},
+  {q:"Fiber-optic cable carries signals as…",a:"Pulses of light",wr:["Radio waves","Magnetic flux","Direct current"],why:"Light is guided down the fiber by total internal reflection — fast and immune to electrical noise."},
+  {q:"A capacitor stores energy in a(n)…",a:"Electric field",wr:["Magnetic field","Resistive load","Gravitational field"],why:"Capacitors store charge in the electric field between their plates; inductors use a magnetic field."},
+  {q:"The microwave band sits…",a:"Above ~1 GHz, below infrared",wr:["Below the audio range","Between AM and FM radio","Above visible light"],why:"Microwaves are very-high-frequency radio waves used for radar, Wi-Fi, and comms links."},
+  {q:"An LED lights up only when it is…",a:"Forward-biased (correct polarity)",wr:["Reverse-biased","Heated","At high frequency"],why:"An LED is a diode — it emits light when forward-biased; reverse the polarity and it stays dark."},
+  {q:"An antenna's job is to…",a:"Convert between guided signals and radiated waves",wr:["Amplify DC voltage","Regulate current","Store electric charge"],why:"Antennas couple a transmitter or receiver to free space, radiating or capturing electromagnetic waves."},
+  {q:"In AM radio, the carrier's ___ is modulated.",a:"Amplitude",wr:["Frequency","Phase","Polarity"],why:"Amplitude Modulation varies the carrier's strength with the signal; FM varies frequency instead."},
+  {q:"The decibel (dB) measures…",a:"A ratio of two power or voltage levels",wr:["Absolute voltage","Frequency","Resistance"],why:"The dB expresses gain or loss as a logarithmic ratio — handy across huge signal ranges."},
+  {q:"A transistor can act as an amplifier and a…",a:"Switch",wr:["Transformer","Antenna","Fuse"],why:"Bias it in the active region to amplify; drive it hard to use it as an on/off switch."},
+  {q:"An inductor opposes a change in…",a:"Current",wr:["Voltage","Resistance","Temperature"],why:"By Lenz's law an inductor resists changes in current; a capacitor resists changes in voltage."},
+  {q:"Equipment is grounded primarily to…",a:"Protect people and provide a 0 V reference",wr:["Boost signal gain","Increase resistance","Generate AC"],why:"Grounding gives fault current a safe path and a common 0-volt reference — safety first."},
+  {q:"An oscilloscope mainly displays…",a:"Voltage versus time (a waveform)",wr:["Resistance versus current","Frequency versus power","Temperature versus time"],why:"The scope plots a signal's voltage over time so you can see its shape — a core test instrument."}
 ];
 let reconBag=[];
-function roundRecon(){
-  if(reconBag.length===0) reconBag = shuffle(RECON.map((_,i)=>i));
-  const item = RECON[reconBag.pop()];
-  const choices = shuffle([{label:item.a,correct:true}, ...item.wr.map(w=>({label:w,correct:false}))]);
-  renderMC({
-    visual:`<div class="panelbox"><p class="qtext">${item.q}</p></div>`,
-    refHTML:`<b>BREADTH CHECK</b> &nbsp; One question pulled from across the upper NEETS modules — AC through fiber optics.`,
-    choices,
-    why:()=>item.why
-  });
+
+/* ===== GENERATORS ===== */
+function makeOhm(){
+  const R=pick([10,22,47,100,150,220,330,470,680,1000]),I=pick([0.05,0.1,0.2,0.25,0.5,1,1.5,2]),V=+(I*R).toFixed(2),sf=pick(["V","I","R"]);
+  let given,ask,answer,unit;
+  if(sf==="V"){given=`I = ${I} A   ·   R = ${R} Ω`;ask="V = ?";answer=V;unit="V";}
+  if(sf==="I"){given=`V = ${V} V   ·   R = ${R} Ω`;ask="I = ?";answer=I;unit="A";}
+  if(sf==="R"){given=`V = ${V} V   ·   I = ${I} A`;ask="R = ?";answer=R;unit="Ω";}
+  const set=new Set([answer]); while(set.size<4){const f=pick([0.5,2,1.5,0.25,3,4]);let c=+(answer*f).toFixed(2);if(c!==answer&&c>0)set.add(c);}
+  const choices=shuffle([...set]).map(v=>({label:`${v} ${unit}`,correct:v===answer}));
+  const work=sf==="V"?`V = I × R = ${I} × ${R} = <b>${V} V</b>`:sf==="I"?`I = V ÷ R = ${V} ÷ ${R} = <b>${I} A</b>`:`R = V ÷ I = ${V} ÷ ${I} = <b>${R} Ω</b>`;
+  return {module:"ohm",visual:`<div class="panelbox"><div class="bigreadout">${ask}</div><div class="subreadout">${given}</div></div><p class="qtext" style="text-align:center;margin-bottom:14px">What does the meter read?</p>`,refHTML:`<b>OHM'S LAW</b> &nbsp; V = I × R &nbsp;·&nbsp; I = V ÷ R &nbsp;·&nbsp; R = V ÷ I &nbsp;— volts, amps, ohms.`,choices,why:win=>win?`${work}. The three quantities always tie together this way.`:`Work the triangle: ${work}.`};
+}
+function makeColor(){
+  const d1=1+rand(9),d2=rand(10),mult=rand(5),value=(d1*10+d2)*Math.pow(10,mult),bands=[COLORS[d1],COLORS[d2],COLORS[mult]];
+  const set=new Set([value]); while(set.size<4){const a=1+rand(9),b=rand(10),m=rand(5);set.add((a*10+b)*Math.pow(10,m));}
+  const choices=shuffle([...set]).map(v=>({label:fmtOhms(v),correct:v===value}));
+  const bx=[78,98,118],bandSvg=bands.map((c,i)=>`<rect x="${bx[i]}" y="20" width="11" height="40" fill="${c.h}"/>`).join("");
+  const chips=COLORS.map(c=>`<span class="chip"><span class="swatch" style="background:${c.h}"></span>${c.d} ${c.n}</span>`).join("");
+  return {module:"color",visual:`<div class="svg-stage"><svg viewBox="0 0 240 80" width="300"><line x1="6" y1="40" x2="60" y2="40" stroke="#9aa" stroke-width="3"/><line x1="180" y1="40" x2="234" y2="40" stroke="#9aa" stroke-width="3"/><rect x="60" y="18" width="120" height="44" rx="20" fill="#cdb89a" stroke="#7a6b52" stroke-width="2"/>${bandSvg}<rect x="150" y="20" width="11" height="40" fill="#c9a227"/></svg></div><p class="qtext" style="text-align:center;margin:6px 0 14px">Bands: <span style="color:var(--scope)">${bands[0].n} · ${bands[1].n} · ${bands[2].n}</span> · Gold</p>`,refHTML:`<b>BAND DECODE</b> &nbsp; 1st digit · 2nd digit · multiplier (×10ⁿ) · tolerance.<div class="chips">${chips}</div>`,choices,why:()=>`${bands[0].n}=${d1}, ${bands[1].n}=${d2} → <b>${d1}${d2}</b>, then ×10<sup>${mult}</sup> (${bands[2].n}) = <b>${fmtOhms(value)}</b>. Gold = ±5% tolerance.`};
+}
+function makeSym(){
+  const names=Object.keys(SYMS),ans=pick(names);
+  const choices=shuffle([ans,...shuffle(names.filter(n=>n!==ans)).slice(0,3)]).map(n=>({label:n,correct:n===ans}));
+  return {module:"sym",visual:`<div class="panelbox"><div class="svg-stage"><svg viewBox="0 0 140 80" width="220">${SYMS[ans]}</svg></div><p class="qtext" style="margin-top:6px">Identify this schematic symbol</p></div>`,refHTML:`<b>PRINT READING</b> &nbsp; Every component has a standard symbol — schematics are the technician's road map.`,choices,why:()=>SYM_WHY[ans]};
+}
+function makeNum(){
+  const dec=1+rand(254),mode=pick(["dec2bin","bin2dec","dec2hex","hex2dec"]),bin=dec.toString(2).padStart(8,"0"),hex=dec.toString(16).toUpperCase();
+  let show,ask,answer,base;
+  if(mode==="dec2bin"){show=`${dec}₁₀`;ask="Binary (8-bit)?";answer=bin;base="bin";}
+  if(mode==="bin2dec"){show=`${bin}₂`;ask="Decimal?";answer=String(dec);base="dec";}
+  if(mode==="dec2hex"){show=`${dec}₁₀`;ask="Hexadecimal?";answer="0x"+hex;base="hex";}
+  if(mode==="hex2dec"){show=`0x${hex}`;ask="Decimal?";answer=String(dec);base="dec";}
+  const set=new Set([answer]); while(set.size<4){const off=pick([1,-1,2,-2,8,16,-16,3]);let n=dec+off;if(n<0||n>255)continue;set.add(base==="bin"?n.toString(2).padStart(8,"0"):base==="hex"?"0x"+n.toString(16).toUpperCase():String(n));}
+  const choices=shuffle([...set]).map(v=>({label:v,correct:v===answer}));
+  return {module:"num",visual:`<div class="panelbox"><div class="bigreadout">${show}</div><div class="subreadout">${ask}</div></div>`,refHTML:`<b>BASES</b> &nbsp; Binary = base-2 (0/1) · Decimal = base-10 · Hex = base-16 (0–9, A–F). One hex digit = 4 bits.`,choices,why:()=>`${dec}₁₀ = <b>${bin}₂</b> = <b>0x${hex}</b>. Computers think in binary; hex is the shorthand we read it in.`};
+}
+function gateSvg(name){
+  const body=name==="NOT"?'<path d="M40 18L90 40 40 62z" fill="none" stroke="var(--scope)" stroke-width="3"/><circle cx="96" cy="40" r="5" fill="none" stroke="var(--scope)" stroke-width="3"/>':(name==="OR"||name==="NOR"||name==="XOR")?'<path d="M38 18q34 4 52 22-18 18-52 22q14-22 0-44z" fill="none" stroke="var(--scope)" stroke-width="3"/>':'<path d="M40 18h26a22 22 0 010 44H40z" fill="none" stroke="var(--scope)" stroke-width="3"/>';
+  const bubble=(name==="NAND"||name==="NOR")?'<circle cx="96" cy="40" r="5" fill="none" stroke="var(--scope)" stroke-width="3"/>':'';
+  const xorBar=name==="XOR"?'<path d="M30 20q-14 20 0 40" fill="none" stroke="var(--scope)" stroke-width="3"/>':'';
+  return `<svg viewBox="0 0 120 80" width="200">${xorBar}${body}${bubble}</svg>`;
+}
+function makeGate(){
+  const name=pick(Object.keys(GATES)),single=name==="NOT",a=rand(2),b=rand(2),out=single?GATES[name].f(a):GATES[name].f(a,b),inLabel=single?`A = ${a}`:`A = ${a} , B = ${b}`;
+  const choices=shuffle([{label:"0",correct:out===0},{label:"1",correct:out===1}]);
+  return {module:"gate",visual:`<div class="panelbox"><div class="svg-stage">${gateSvg(name)}</div><div class="bigreadout" style="font-size:1.5rem">${name}</div><div class="subreadout">Inputs &nbsp; ${inLabel}</div></div><p class="qtext" style="text-align:center;margin-bottom:14px">Output?</p>`,refHTML:`<b>LOGIC</b> &nbsp; Gates are the building blocks of every digital circuit and computer.`,choices,why:()=>`${GATES[name].d} With ${inLabel}, output = <b>${out}</b>.`};
+}
+function makeRecon(){
+  if(reconBag.length===0) reconBag=shuffle(RECON.map((_,i)=>i));
+  const item=RECON[reconBag.pop()];
+  const choices=shuffle([{label:item.a,correct:true},...item.wr.map(w=>({label:w,correct:false}))]);
+  return {module:"recon",visual:`<div class="panelbox"><p class="qtext">${item.q}</p></div>`,refHTML:`<b>MIXED REVIEW</b> &nbsp; One question pulled from across the curriculum — AC, signals, components, and more.`,choices,why:()=>item.why};
+}
+const GEN={ohm:makeOhm,color:makeColor,sym:makeSym,num:makeNum,gate:makeGate,recon:makeRecon};
+
+/* ===== MODULES ===== */
+const MODULES=[
+  {id:"ohm",mod:"DC · OHM'S LAW",title:"Ohm's Law Console",blurb:"Solve for voltage, current, or resistance on a live meter.",icon:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15l5-6 3 3"/><circle cx="17" cy="9" r="1"/></svg>'},
+  {id:"color",mod:"COMPONENTS",title:"Resistor Color Code",blurb:"Read the colored bands and call the resistance value.",icon:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12h3l2-5 4 10 4-10 2 5h3"/></svg>'},
+  {id:"sym",mod:"SCHEMATICS",title:"Schematic Symbols",blurb:"Identify the part from its schematic symbol.",icon:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h5m8 0h5"/><path d="M8 7v10l8-5-8-5z" fill="currentColor"/></svg>'},
+  {id:"num",mod:"NUMBER SYSTEMS",title:"Number Systems",blurb:"Convert between binary, decimal, and hexadecimal.",icon:'<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><text x="3" y="11" font-size="9" font-family="monospace">10</text><text x="3" y="21" font-size="9" font-family="monospace">01</text></svg>'},
+  {id:"gate",mod:"DIGITAL LOGIC",title:"Logic Gates",blurb:"Given the inputs, predict the gate's output — 0 or 1.",icon:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h6a6 6 0 010 12H4z"/><path d="M2 9h2M2 15h2M16 12h6"/></svg>'},
+  {id:"recon",mod:"MIXED REVIEW",title:"Mixed Review",blurb:"AC, radar, antennas, components, signals — the whole field.",icon:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>'}
+];
+function masteryTier(n){ if(n>=30)return{star:"★★★",pct:100}; if(n>=15)return{star:"★★☆",pct:66}; if(n>=5)return{star:"★☆☆",pct:33}; return{star:"☆☆☆",pct:Math.min(n*6,30)}; }
+
+/* ===== HUD ===== */
+function updateHUD(){
+  const li=levelInfo(stats.xp);
+  $("lvl-num").textContent=li.idx+1; $("lvl-name").textContent=li.name;
+  $("m-xp").textContent=stats.xp; $("m-streak").textContent=run.combo||0; $("m-day").textContent=stats.dayStreak;
+  $("ll-best").textContent=stats.lightningBest; $("dd-streak").textContent=stats.dayStreak;
+  $("dd-status").textContent = stats.lastDay===today() ? "done today ✓" : "ready";
+  const C=119;
+  if(li.nextXp!==null){ const into=(stats.xp-li.curXp)/(li.nextXp-li.curXp); $("xp-ring").style.strokeDashoffset=C*(1-Math.max(0,Math.min(1,into))); $("lvl-next").textContent=`${stats.xp} / ${li.nextXp} XP`; }
+  else { $("xp-ring").style.strokeDashoffset=0; $("lvl-next").textContent="Max level reached"; }
+  const n=Object.keys(stats.unlocked).length, b=$("ach-badge"); b.textContent=n; b.classList.toggle("hidden",n===0);
+  $("btn-sound").innerHTML = muted
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15 8a5 5 0 010 8M18 5a9 9 0 010 14"/></svg>';
 }
 
-/* ============ BOOT ============ */
-renderHub();
-updateHUD();
+/* ===== HUB ===== */
+function renderHub(){
+  $("stations").innerHTML=MODULES.map(m=>{ const mc=stats.moduleCorrect[m.id]||0,t=masteryTier(mc);
+    return `<button class="station" data-id="${m.id}">${m.icon}<span class="mod">${m.mod}</span><h3>${m.title}</h3><p>${m.blurb}</p><div class="mastery"><div class="mtrack"><div class="mfill" style="width:${t.pct}%"></div></div><span class="mstars">${t.star}</span></div></button>`;
+  }).join("");
+  document.querySelectorAll(".station").forEach(b=>b.onclick=()=>startModule(b.dataset.id));
+}
+function show(view){ ["hub","game","result","ach-view"].forEach(v=>$(v).classList.toggle("hidden",v!==view)); }
+
+/* ===== RUN STATE ===== */
+let run={mode:null,module:null,combo:0,qStart:0,score:0,wrong:0,timeLeft:0,timer:null,dailyCount:0};
+
+/* ===== SCORING ===== */
+function gainXP(speedMs){ const mult=Math.min(1+(run.combo-1)*0.25,3); let xp=Math.round(10*mult); if(speedMs<4000) xp+=5; return xp; }
+function floatXP(text){ const el=document.createElement("div"); el.className="floatxp"; el.textContent=text; el.style.left=(window.innerWidth/2-20+rand(40))+"px"; el.style.top=(window.innerHeight*0.4)+"px"; document.body.appendChild(el); setTimeout(()=>el.remove(),1000); }
+function checkUnlocks(){ ACH.forEach(a=>{ if(!stats.unlocked[a.id]&&a.chk(stats)){ stats.unlocked[a.id]=true; queueToast("ACHIEVEMENT UNLOCKED",a.name,true); sAch(); confetti(28,"amber"); } }); delete stats._fast; delete stats._flawless; }
+function applyAnswer(win,q){
+  const speed=Date.now()-run.qStart; stats.totalAnswered++; const prev=levelInfo(stats.xp).idx;
+  if(win){ run.combo++; stats.totalCorrect++; if(q&&q.module) stats.moduleCorrect[q.module]=(stats.moduleCorrect[q.module]||0)+1; if(run.combo>stats.bestStreak) stats.bestStreak=run.combo; if(speed<3000) stats._fast=true; const xp=gainXP(speed); stats.xp+=xp; floatXP("+"+xp+" XP"); sCorrect(); }
+  else { run.combo=0; sWrong(); }
+  const now=levelInfo(stats.xp).idx; if(now>prev){ queueToast("LEVEL UP",LEVELS[now].name,false); sLevel(); confetti(46,"scope"); }
+  checkUnlocks(); persist(); updateHUD();
+}
+
+/* ===== PRESENT ===== */
+function presentQuestion(q){
+  run._q=q;
+  $("g-feedback").className="feedback"; $("g-next").className="nextbtn";
+  $("g-visual").innerHTML=q.visual||""; $("g-ref").innerHTML=(run.mode==="module"&&q.refHTML)?q.refHTML:"";
+  const opts=$("g-options"); opts.innerHTML=""; run.qStart=Date.now();
+  const cb=$("g-combo"); if(run.combo>=2){ cb.textContent=`🔥 ${run.combo}× combo`; cb.classList.add("on"); } else cb.classList.remove("on");
+  q.choices.forEach(c=>{ const b=document.createElement("button"); b.className="opt"; b.textContent=c.label; b.onclick=()=>answer(c.correct,b,q); opts.appendChild(b); });
+}
+function answer(win,btn,q){
+  document.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+  btn.classList.add(win?"correct":"wrong");
+  if(!win){ const opts=[...$("g-options").children]; opts.forEach((x,i)=>{ if(q.choices[i].correct) x.classList.add("correct"); }); }
+  applyAnswer(win,q);
+  if(run.mode==="module"){
+    const fb=$("g-feedback"); fb.classList.add("show",win?"good":"bad");
+    $("g-verdict").textContent=win?pick(["Correct.","Nailed it.","Spot on.","Locked in."]):"Not quite.";
+    $("g-why").innerHTML=q.why(win); $("g-next").classList.add("show");
+  } else if(run.mode==="lightning"){
+    if(win) run.score++; else { run.wrong++; run.timeLeft=Math.max(0,run.timeLeft-3); pulseTimer(); }
+    updateLightningStat(); setTimeout(()=>{ if(run.timeLeft>0&&run.mode==="lightning") loadRound(); },520);
+  } else if(run.mode==="daily"){
+    if(win) run.score++;
+    const fb=$("g-feedback"); fb.classList.add("show",win?"good":"bad");
+    $("g-verdict").textContent=(win?"Correct.":"Not quite.")+` (${run.dailyCount+1}/5)`; $("g-why").innerHTML=q.why(win);
+    run.dailyCount++; $("g-next").classList.add("show"); if(run.dailyCount>=5) $("g-next").textContent="See results ›";
+  }
+}
+
+/* ===== MODES ===== */
+function loadRound(){ presentQuestion((run.mode==="module"?GEN[run.module]:GEN[pick(Object.keys(GEN))])()); }
+function startModule(id){
+  run={mode:"module",module:id,combo:0,qStart:0,score:0,wrong:0,timeLeft:0,timer:null,dailyCount:0};
+  ensureAudio(); const m=MODULES.find(x=>x.id===id);
+  $("g-mod").textContent=m.mod; $("g-title").textContent=m.title; $("g-timerwrap").classList.add("hidden"); $("g-runstat").textContent="";
+  $("g-next").textContent="Next ›"; $("g-next").onclick=loadRound;
+  show("game"); updateHUD(); loadRound(); window.scrollTo({top:0,behavior:"smooth"});
+}
+function updateLightningStat(){ $("g-runstat").innerHTML=`Correct <b>${run.score}</b> &nbsp; Time <b>${Math.max(0,Math.ceil(run.timeLeft))}s</b>`; }
+function pulseTimer(){ const f=$("g-timerfill"); f.style.background="var(--signal)"; setTimeout(()=>f.style.background="linear-gradient(90deg,var(--amber),var(--signal))",200); }
+function startLightning(){
+  if(run.timer) clearInterval(run.timer);
+  run={mode:"lightning",module:null,combo:0,qStart:0,score:0,wrong:0,timeLeft:60,timer:null,dailyCount:0};
+  ensureAudio();
+  $("g-mod").textContent="CHALLENGE"; $("g-title").textContent="Lightning Round";
+  $("g-timerwrap").classList.remove("hidden"); $("g-next").classList.remove("show"); $("g-feedback").className="feedback";
+  show("game"); updateHUD(); loadRound(); updateLightningStat();
+  run.timer=setInterval(()=>{
+    run.timeLeft-=0.1; $("g-timerfill").style.width=Math.max(0,(run.timeLeft/60)*100)+"%";
+    if(run.mode==="lightning") updateLightningStat();
+    if(run.timeLeft<=0){ clearInterval(run.timer); endLightning(); }
+  },100);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function endLightning(){
+  document.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+  if(run.score>stats.lightningBest) stats.lightningBest=run.score;
+  if(run.score>=10&&run.wrong===0) stats._flawless=true;
+  checkUnlocks(); persist(); updateHUD();
+  $("result").innerHTML=`<div class="results"><div class="rbig">${run.score}</div><div class="rsub">correct in 60 seconds</div><div class="rstats"><div class="rstat"><div class="v" style="color:var(--signal)">${run.wrong}</div><div class="k">missed</div></div><div class="rstat"><div class="v" style="color:var(--amber)">${stats.lightningBest}</div><div class="k">your best</div></div></div><div class="rbtns"><button class="pbtn primary" id="r-again">Run it again</button><button class="pbtn" id="r-hub">Back to hub</button></div></div>`;
+  show("result"); $("r-again").onclick=startLightning; $("r-hub").onclick=()=>{show("hub");renderHub();updateHUD();};
+}
+function startDaily(){
+  run={mode:"daily",module:null,combo:0,qStart:0,score:0,wrong:0,timeLeft:0,timer:null,dailyCount:0};
+  ensureAudio();
+  $("g-mod").textContent="CHALLENGE"; $("g-title").textContent="Daily Drill"; $("g-timerwrap").classList.add("hidden");
+  $("g-next").textContent="Next ›"; $("g-next").onclick=()=>{ if(run.dailyCount>=5) endDaily(); else loadRound(); };
+  show("game"); updateHUD(); loadRound(); window.scrollTo({top:0,behavior:"smooth"});
+}
+function endDaily(){
+  const t=today();
+  if(stats.lastDay!==t){ if(stats.lastDay&&dayDiff(stats.lastDay,t)===1) stats.dayStreak++; else stats.dayStreak=1; stats.lastDay=t; }
+  checkUnlocks(); persist(); updateHUD();
+  $("result").innerHTML=`<div class="results"><div class="rbig">${run.score}/5</div><div class="rsub">today's drill complete</div><div class="rstats"><div class="rstat"><div class="v" style="color:var(--violet)">${stats.dayStreak}</div><div class="k">day streak</div></div></div><div class="rbtns"><button class="pbtn" id="r-hub">Back to hub</button></div></div>`;
+  show("result"); $("r-hub").onclick=()=>{show("hub");renderHub();updateHUD();};
+}
+
+/* ===== TOASTS ===== */
+let toastQ=[],toastBusy=false;
+function queueToast(sm,main,isAch){ toastQ.push({sm,main,isAch}); if(!toastBusy) nextToast(); }
+function nextToast(){
+  if(toastQ.length===0){ toastBusy=false; return; } toastBusy=true;
+  const o=toastQ.shift(), t=$("toast"); t.classList.toggle("ach",!!o.isAch);
+  $("toast-sm").textContent=o.sm; $("toast-main").textContent=o.main; t.classList.add("show");
+  setTimeout(()=>{ t.classList.remove("show"); setTimeout(nextToast,400); },2300);
+}
+
+/* ===== CONFETTI ===== */
+const cc=$("confetti"),ctx=cc.getContext("2d");
+function sizeC(){ cc.width=innerWidth; cc.height=innerHeight; } sizeC(); addEventListener("resize",sizeC);
+let parts=[];
+function confetti(n,kind){
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  const cols=kind==="amber"?["#ffb454","#ffd28a","#fff"]:["#54e08a","#a7f3c8","#fff","#a78bfa"];
+  const wasEmpty=parts.length===0;
+  for(let i=0;i<n;i++) parts.push({x:innerWidth/2,y:innerHeight*0.35,vx:(Math.random()-.5)*9,vy:Math.random()*-9-3,g:0.32,life:60+rand(30),col:pick(cols),s:3+rand(4),rot:Math.random()*6});
+  if(wasEmpty) requestAnimationFrame(raf);
+}
+function raf(){
+  ctx.clearRect(0,0,cc.width,cc.height);
+  parts.forEach(p=>{ p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.life--;p.rot+=.2; ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.col;ctx.globalAlpha=Math.max(0,p.life/40);ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*1.6);ctx.restore(); });
+  parts=parts.filter(p=>p.life>0&&p.y<cc.height+20);
+  if(parts.length) requestAnimationFrame(raf); else ctx.clearRect(0,0,cc.width,cc.height);
+}
+
+/* ===== OSCILLOSCOPE HERO ===== */
+(function(){
+  const cv=$("scope"); if(!cv) return; const x=cv.getContext("2d");
+  function size(){ cv.width=cv.clientWidth; cv.height=cv.clientHeight; } size(); addEventListener("resize",size);
+  const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches; let ph=0;
+  function draw(){
+    const w=cv.width,h=cv.height; x.clearRect(0,0,w,h);
+    x.strokeStyle="rgba(42,65,80,.35)"; x.lineWidth=1;
+    for(let gx=0;gx<w;gx+=34){x.beginPath();x.moveTo(gx,0);x.lineTo(gx,h);x.stroke();}
+    for(let gy=0;gy<h;gy+=34){x.beginPath();x.moveTo(0,gy);x.lineTo(w,gy);x.stroke();}
+    x.beginPath(); x.lineWidth=2.4; x.strokeStyle="rgba(84,224,138,.9)"; x.shadowColor="rgba(84,224,138,.7)"; x.shadowBlur=8;
+    for(let px=0;px<=w;px+=2){ const t=px/w*Math.PI*4+ph,y=h/2+Math.sin(t)*h*0.22+Math.sin(t*2.3)*h*0.06; px===0?x.moveTo(px,y):x.lineTo(px,y); }
+    x.stroke(); x.shadowBlur=0;
+    if(!reduce){ ph+=0.04; requestAnimationFrame(draw); }
+  }
+  draw();
+})();
+
+/* ===== ACHIEVEMENTS VIEW ===== */
+function renderAch(){ $("ach-grid").innerHTML=ACH.map(a=>{ const on=!!stats.unlocked[a.id]; return `<div class="ach ${on?'unlocked':'locked'}"><div class="aico">${on?a.icon:'🔒'}</div><div><h4>${a.name}</h4><p>${a.desc}</p></div></div>`; }).join(""); }
+
+/* ===== WIRE UP ===== */
+$("act-lightning").onclick=()=>{ ensureAudio(); startLightning(); };
+$("act-daily").onclick=()=>{ ensureAudio(); startDaily(); };
+$("back").onclick=()=>{ if(run.timer)clearInterval(run.timer); run.mode=null; show("hub"); renderHub(); updateHUD(); };
+$("btn-trophy").onclick=()=>{ renderAch(); show("ach-view"); };
+$("ach-back").onclick=()=>{ show("hub"); renderHub(); updateHUD(); };
+$("btn-sound").onclick=()=>{ muted=!muted; stats._muted=muted; persist(); ensureAudio(); updateHUD(); if(!muted) sCorrect(); };
+$("btn-reset").onclick=()=>{ if(confirm("Reset all XP, levels, achievements, and streaks? This cannot be undone.")){ stats=JSON.parse(JSON.stringify(DEFAULT)); muted=false; persist(); renderAch(); renderHub(); updateHUD(); } };
+
+/* ===== BOOT ===== */
+renderHub(); updateHUD();
 </script>
 </body>
 </html>
